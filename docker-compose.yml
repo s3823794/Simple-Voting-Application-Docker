@@ -8,21 +8,27 @@ services:
       POSTGRES_PASSWORD: "postgres"
 
   vote:
-    image: voting-app
+    image: sitloboi2012/vote-app:latest
+    build:
+      context: ./vote
     ports:
-      - "8080:80" # Expose the vote service on port 8080 (http://<EC2_IP>:8080)
+      - "8080:80"
     depends_on:
       - redis
 
   worker:
-    image: worker-app
+    image: sitloboi2012/worker-app:latest
+    build:
+      context: ./worker
     depends_on:
       - db
       - redis
 
   result:
-    image: result-app
+    image: sitloboi2012/result-app:latest
+    build:
+      context: ./result
     ports:
-      - "8081:80" # Expose the result service on port 8081 (http://<EC2_IP>:8081)
+      - "8081:80"
     depends_on:
       - db
